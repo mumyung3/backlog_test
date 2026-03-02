@@ -57,27 +57,27 @@ int main(int argc, char* argv[]) {
 
 	// SOMAXCONN 테스트
 
-	for (int j = 0; ;j++) {
-		SOCKADDR_IN local = {};
-		local.sin_family = AF_INET;
-		//j만큼 127.0.0.j로 설정
-		WCHAR ipStr[20] = {};
-		swprintf_s(ipStr, 20, L"127.0.0.%d", j + 1);
-		InetPton(AF_INET, ipStr, &local.sin_addr);
-		for (int i = 0; ;i++) {
+	/*for (int j = 0; ;j++) {*/
+	SOCKADDR_IN local = {};
+	local.sin_family = AF_INET;
+	//j만큼 127.0.0.j로 설정
+	WCHAR ipStr[20] = {};
+	//swprintf_s(ipStr, 20, L"127.0.0.%d", j + 1);
+	//InetPton(AF_INET, ipStr, &local.sin_addr);
+	for (int i = 0; ;i++) {
 
-			SOCKET s = socket(AF_INET, SOCK_STREAM, 0);
-			bind(s, (SOCKADDR*)&local, sizeof(local));
-			int ret = connect(s, (SOCKADDR*)&serveraddr, sizeof(serveraddr));
-			if (ret == SOCKET_ERROR) {
-				wprintf(L"실패!\n backlog 한계 : %d\n", i);
-				wprintf(L"connect 실패! 에러 %d \n", WSAGetLastError());
-				break;
-			}
-			wprintf(L"%d번째 연결 성공\n", i);
-
+		SOCKET s = socket(AF_INET, SOCK_STREAM, 0);
+		//bind(s, (SOCKADDR*)&local, sizeof(local));
+		int ret = connect(s, (SOCKADDR*)&serveraddr, sizeof(serveraddr));
+		if (ret == SOCKET_ERROR) {
+			wprintf(L"실패!\n backlog 한계 : %d\n", i);
+			wprintf(L"connect 실패! 에러 %d \n", WSAGetLastError());
+			break;
 		}
+		wprintf(L"%d번째 연결 성공\n", i);
+
 	}
+	//}
 
 
 	getchar();
